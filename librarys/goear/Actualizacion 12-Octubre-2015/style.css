@@ -1,0 +1,113 @@
+/* Style Normal si saves lo arreglas ps xD */
+/* ATTE. ROCKNEY */
+BODY{
+background-color: #FFFFFF;
+margin-left: auto;
+margin-right: auto; background-image:url('images/bg.png'); background-attachment:fixed
+    }
+BODY, TD, TH, TR{
+color: #000;
+font-size: 8pt;
+font-family: verdana, sans-serif;
+}
+ .fileThumb
+{
+	background-position:center;
+	background-image: url();
+	border: 1px solid #B8B8B8;	
+	/* background-color:#fff; */
+	width: 100px;
+	height: 75px;
+	border:0;
+}
+
+#tagcloud1
+{
+background:#FFCCFF;
+color:#0066FF;
+padding: 10px;
+border: 2px solid #FFE7B6;
+text-align:center;
+
+}
+ #tagcloud1  a:hover
+{
+background:#FFCC66;
+
+}
+#tagcloud2
+{
+background:#FFCC66;
+color:#0066FF;
+padding: 10px;
+border: 1px solid #FFE7B6;
+text-align:center;
+margin: 10px 0;
+
+}
+ #tagcloud2  a:hover
+{
+background:#FFCCFF;
+
+}
+#tagcloud3
+{
+background:#CCCC66;
+color:#0066FF;
+padding: 10px;
+border: 1px solid #FFE7B6;
+text-align:center;
+
+}
+  #tagcloud3  a:hover
+{
+background:#FFCC66;
+
+}
+
+.digg {
+font-size: 200%;
+font: sans-serif;
+	background: #FBFBFB;
+	border: 1px solid #CDCDCD;
+	color: #000524;
+	padding: 1px;
+}
+A:link {text-decoration: none; color: #454444;}
+A:visited {text-decoration: none; color: #000000;}
+A:active {text-decoration: none; color: #3b3b36;}
+A:hover {text-decoration: none; color: #09b74;}
+
+
+ hr {
+  border: 0;
+ color: #B9B9B9;
+background-color: #B9B9B9;
+height: 1px;
+}
+
+table {
+
+  border-collapse:collapse;
+}
+
+#replacement-2 {
+  width: 78px;
+  height: 32px;
+  padding: 0px 0 0;
+  margin: 0;
+  border: 0;
+  background: transparent url(http://gimado.com/images/searchgimado.png) no-repeat ;
+  overflow: hidden;
+  cursor: pointer; /* hand-shaped cursor */
+  cursor: hand; /* for IE 5.x */
+}
+form>#replacement-2 { /* For non-IE browsers*/
+  height: 0px;
+}
+fieldset {
+	width:200px;
+}
+input { 
+height:35px;
+}
