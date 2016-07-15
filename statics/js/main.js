@@ -21,9 +21,18 @@ var search = (function(){
 
   var suscribeEvents = function(){
     dom.frmSearch.on("submit", events.submit)
+    dom.list.on("click", "a.listen", events.escuchar)
   };
 
   var events = {
+    escuchar : function(e){
+      e.preventDefault();
+      ele = $(e.target);
+      url = ele.attr("href");
+      title = ele.parents("li").find(".title").text();
+      musicPlayer.addMusic({link:url, title:title});
+    },
+
     submit : function(e){
       e.preventDefault();
       var q = dom.txtSearch.val().replace(/ /gi,"+");
@@ -33,7 +42,7 @@ var search = (function(){
     }
   };
 
-  var fn = {
+  var fn = {    
     search: function(q){
       $.post(st.url, {q: q, service: st.service}, function(data){
         if(typeof data === 'object'){
@@ -43,7 +52,7 @@ var search = (function(){
             console.log("results.length", results.length);
             for(var i = 0; i < results.length; i++){
               var item = results[i];              
-              li+='<li><div class="title">' + item.title + '</div><div><a href="http://www.goear.com/action/sound/get/' + item.id + '">Escuchar</a></div><div><a href="download.php?file=' + item.id + '">Download</a></div></li>';
+              li+='<li><div class="title">' + item.title + '</div><div><a class="listen" href="http://www.goear.com/action/sound/get/' + item.id + '">Escuchar</a></div><div><a href="download.php?file=' + item.id + '">Download</a></div></li>';
             }            
           }
           dom.list.html(li);

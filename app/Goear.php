@@ -16,6 +16,7 @@ class Goear{
     $results = $this->html("http://www.goear.com/search/" . $q . "/" . $page);
 
     if(count($results)>0){
+            $total = 0;
             foreach ($results as $item) {
                 $songs[] = array(
                 'id'        => $item['id'],
@@ -37,6 +38,7 @@ class Goear{
 
 
   public function html($url, $referer="http://google.es"){
+    $borrar = array("(",")","[","]","www.djfla.com.ar","www.back2electro.com","www.thedracko.tk","www.musicalocaza.tk","www.torrentazos.com","","www.",".com",".tk","jaipel",".co",".uni",".cc",".ar");
     $cargar = file_get_contents($url);
     preg_match("'<ol class=\"board_list results_list\">(.*?)</ol>'si", $cargar, $pre1);
     preg_match_all("'<a class=\"\" title=\"Escuchar (.*?)\" href=\"http://www.goear.com/listen/(.*?)/(.*?)\">(.*?)</a>'si", $pre1[1], $titulo);
