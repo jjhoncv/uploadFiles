@@ -35,23 +35,20 @@ var search = (function(){
 
   var fn = {
     search: function(q){
-      $.post("http://www.goear.com/action/suggest/sounds", {skey:"arcangel"}, function(data){
-        console.log(data);
-      })
-      /*$.post(st.url, {q: q, service: st.service}, function(data){
+      $.post(st.url, {q: q, service: st.service}, function(data){
         if(typeof data === 'object'){
+          var li = "";
           if (Array.isArray(data.results) && data.results.length){
             var results = data.results;
             console.log("results.length", results.length);
-            var li = "";
             for(var i = 0; i < results.length; i++){
               var item = results[i];              
-              li+='<li><div class="title">' + item.title + '</div><div><a href="download.php?file=' + item.id + '"></a></div></li>';
+              li+='<li><div class="title">' + item.title + '</div><div><a href="http://www.goear.com/action/sound/get/' + item.id + '">Escuchar</a></div><div><a href="download.php?file=' + item.id + '">Download</a></div></li>';
             }            
-            dom.list.html(li);
           }
+          dom.list.html(li);
         }
-      }, "json")*/
+      }, "json")
     }
   };
 

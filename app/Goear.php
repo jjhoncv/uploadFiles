@@ -8,27 +8,22 @@ class Goear{
 
 
   public function __construct(){
-    $this->_soundcloud_key = "7b356f9fbeeade2f83c203aeb963e62e";
     $this->_limit = 25;
   }
 
-  public function search($q){
+  public function search($q, $page="0"){
     
-    $html = $this->html("http://api.soundcloud.com/tracks.json?callback=&client_id=" . $this->_soundcloud_key . "&track_types=original&filter=downloadable&q=$q&limit=" . $this->_limit);
-
-    $results = json_decode($html);
-    $songs          = [];
-    $total          = 0;
+    $results = $this->html("http://www.goear.com/search/" . $q . "/" . $page);
 
     if(count($results)>0){
             foreach ($results as $item) {
                 $songs[] = array(
-                'id'        => $item->id,
-                'title'     => $item->title,
-                'artist'    => '',
+                'id'        => $item['id'],
+                'title'     => $item['title'],
+                'artist'    => $item['artist'],
                 'cover'     => '',
-                'duration'  => '',
-                'server'    => 'sc'
+                'duration'  => $item['duration'],
+                'server'    => 'go'
             );
                 $total++;
             }
@@ -42,16 +37,32 @@ class Goear{
 
 
   public function html($url, $referer="http://google.es"){
-    $ch = curl_init();
-        curl_setopt($ch, CURLOPT_REFERER, $referer);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; es-ES; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // Seguir URL al momento de hacer curl
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 4); // controla tiempo de espera al buscar.
-        curl_setopt($ch, CURLOPT_URL, $url);
-        $buffer = curl_exec($ch);
-        curl_close($ch);
-        return $buffer;
+    $cargar = file_get_contents($url);
+    preg_match("'<ol class=\"board_list results_list\">(.*?)</ol>'si", $cargar, $pre1);
+    preg_match_all("'<a class=\"\" title=\"Escuchar (.*?)\" href=\"http://www.goear.com/listen/(.*?)/(.*?)\">(.*?)</a>'si", $pre1[1], $titulo);
+    preg_match_all("'<li class=\"stats length\" title=\"Duración\">(.*?)</li>'si", $pre1[1], $length);
+    preg_match_all("'<li class=\"band\"><a class=\"band_name\" href=\"(.*?)\">(.*?)</a></li>'si", $pre1[1], $band);
+    preg_match_all("'<li class=\"stats (.*?)\" title=\"Kbps\">(.*?)<abbr title=\"Kilobit por segundo\">kbps</abbr></li>'si", $pre1[1], $kbps);
+    $res = count($titulo[0]);
+
+    if($res > 1){      
+      for($i=0; $i < $res; $i++){
+        $temp = $titulo[4][$i];
+        $temp = strtolower($temp);
+        $temp = ucwords($temp);
+        $temp = str_replace($borrar, "",$temp);
+
+        $songs[] = array(
+          'title'   => $temp,
+          'artist'  => $band[2][$i],
+          'duration'=> $length[1][$i],
+          'kbps'    => $kbps[2][$i],
+          'id'      => $titulo[2][$i]
+        );
+
+      }
+    }
+    return $songs;
   }
 
   public function download($id){
