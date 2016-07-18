@@ -21,16 +21,16 @@ var search = (function(){
 
   var suscribeEvents = function(){
     dom.frmSearch.on("submit", events.submit)
-    dom.list.on("click", "a.listen", events.escuchar)
+    dom.list.on("click", "a.listen", events.addPlaylist)
   };
 
   var events = {
-    escuchar : function(e){
+    addPlaylist : function(e){
       e.preventDefault();
       ele = $(e.target);
       url = ele.attr("href");
       title = ele.parents("li").find(".title").text();
-      musicPlayer.addMusic({link:url, title:title});
+      playList.addSong({url:url, title:title});
     },
 
     submit : function(e){
@@ -63,7 +63,7 @@ var search = (function(){
 
   var initialize = function(opts){
     st = $.extend({}, defaults, opts);
-    catchDom();
+    catchDom();    
     suscribeEvents();
   };
   

@@ -35,20 +35,23 @@
 		<input type="text" class="search"/>
 	</div>
 	<div class="to_music_player">
-		<ul>
-			<li class="empty">
-				<article>
-					<a href="#" class="remove">Quitar</a>					
-					<div class="title">Insert file</div>					
-				</article>
-			</li>
-		</ul>
+		<ul></ul>
 	</div>
 </div>
+<script type="text/template" id="tplItem">
+	<li>
+		<article data-index="{{= song.index}}">
+			<a href="#" class="listen">Escuchar</a>
+			<a href="#" class="remove">Quitar</a>
+			<div class="title">{{= song.title}}</div>					
+		</article>
+	</li>
+</script>
 <script type="text/javascript" src="statics/js/jquery-1.12.4/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="statics/js/underscore-1.6.0/underscore.min.js"></script>
 <script type="text/javascript" src="statics/css/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="statics/js/List.js"></script>
-<script type="text/javascript" src="statics/js/musicPlayer.js"></script>
+<script type="text/javascript" src="statics/js/Mp3.js"></script>
+<script type="text/javascript" src="statics/js/playList.js"></script>
 <script type="text/javascript" src="statics/js/main.js"></script>
 </body>
 </html>
