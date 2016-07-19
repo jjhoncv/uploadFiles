@@ -83,7 +83,7 @@ var playList = (function(){
       }
     },
 
-    renderSong : function(song){     
+    renderSong : function(song){
       var item = _.template(dom.tplItem.html(), {song:song}) 
       dom.listMusic.append(item);
     },  
@@ -91,22 +91,23 @@ var playList = (function(){
     listenSong : function(index){
       st.index = (typeof index == "undefined") ? 0 : index;
       var song = st.songs[st.index];
+      fn.refreshRender();
       Mp3.stop();
       Mp3.create(song.url);     
       Mp3.play();
     },
 
     prevSong : function(){
-      if(st.index >= 0){
+      if(st.index > 0){
         st.index--;
-        fn.listenSong();
+        fn.listenSong(st.index);
       }    
     },
 
     nextSong : function(){
-      if(st.index <= st.songs.length){
+      if(st.index < st.songs.length -1 ){
         st.index++;
-        fn.listenSong();
+        fn.listenSong(st.index);
       }      
     },
 
@@ -122,6 +123,10 @@ var playList = (function(){
 
     searchMusic : function(q){
 
+    },
+
+    refreshRender: function(){
+      dom.listMusic.find("li").removeClass("active").eq(st.index).addClass("active");
     },
 
     removeSong : function(index){
