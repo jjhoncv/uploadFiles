@@ -1,0 +1,102 @@
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		title
+		link(href='statics/css/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css', media='all', rel='stylesheet', type='text/css')
+		link(href='statics/css/bootstrap-3.3.6-dist/css/bootstrap.min.css', media='all', rel='stylesheet', type='text/css')
+	body
+		.container
+			.page-header
+				h1 Example page header <small>Subtext for header</small>          
+			.row
+				.col-sm-12
+					.input-group
+						span.input-group-btn
+							button.btn.btn-default(type='button') Go!
+						input.form-control(type='text', placeholder='Search for...')
+			.row
+				.col-sm-12
+					h3
+						| Example heading 
+						span.label.label-default New
+			.row
+				each val in [1, 2, 3, 4, 5,6,7,8,9,10,11,12]					
+					.col-sm-3
+						.thumbnail
+							img(src='...', alt='...')
+							.caption
+								h3 Thumbnail label
+								p
+									| Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+								p
+									a.btn.btn-primary(href='#', role='button') Button
+									a.btn.btn-default(href='#', role='button') Button
+			.row
+				.col-sm-3
+					.progress
+						.progress-bar(role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;")
+							span.sr-only 60% Complete
+					.row
+						.col-sm-3
+							button.btn.btn-default(type="button")
+								span.glyphicon.glyphicon-step-backward
+						.col-sm-6
+							button.btn.btn-default.center-block(type="button")
+								span.glyphicon.glyphicon-pause
+						.col-sm-3
+							button.btn.btn-default(type="button")
+								span.glyphicon.glyphicon-step-forward
+					.row
+						.col-sm-3
+							button.btn.btn-default(type="button")
+								span.glyphicon.glyphicon-volume-down
+						.col-sm-6
+							.progress
+								.progress-bar(role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:20%;")
+						.col-sm-3
+							button.btn.btn-default(type="button")
+								span.glyphicon.glyphicon-volume-up
+
+						
+
+				.col-sm-9
+					p ss
+					
+		form.frm_search
+			input.txt_search(type='text', name='', value='', placeholder='')
+			br
+			button Search
+		ul.list
+		.music_player
+			.controls
+				.prev prev
+				.play play
+				.stop stop
+				.next next
+			.controls_bar
+				.progress_bar
+					.bar
+			.time
+				span.minutes 04
+				| :
+				span.seconds 55
+			.control_search
+				input.search(type='text')
+			.to_music_player
+				ul
+		script#tplItem(type='text/template').
+			<li>
+			<article data-index="{{= song.index}}">
+			<a href="#" class="listen">Escuchar</a>
+			<a href="#" class="remove">Quitar</a>
+			<div class="title">{{= song.title}}</div>
+			</article>
+			</li>
+		script(type='text/javascript', src='statics/js/jquery-1.12.4/jquery-1.12.4.min.js')
+		script(type='text/javascript', src='statics/js/underscore-1.6.0/underscore.min.js')
+		script(type='text/javascript', src='statics/css/bootstrap-3.3.6-dist/js/bootstrap.min.js')
+		script(type='text/javascript', src='statics/js/Mp3.js')
+		script(type='text/javascript', src='statics/js/playList.js')
+		script(type='text/javascript', src='statics/js/main.js')
