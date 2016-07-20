@@ -1,4 +1,4 @@
-var search = (function(){
+var main = (function(){
   
   var defaults = {
     frmSearch : ".frm_search",
@@ -72,4 +72,4 @@ var search = (function(){
   }
 })();
 
-search.init();
+main.init();

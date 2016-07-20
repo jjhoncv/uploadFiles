@@ -1,5 +1,7 @@
 <?php
-//require("../app/utils/utils.php");
+require("Connection.php");
+require("Consulta.php");
+
 class Goear{
 
   private $_soundcloud_key;
@@ -9,24 +11,26 @@ class Goear{
 
   public function __construct(){
     $this->_limit = 25;
+    $link = new Connection("localhost", "root", "frontend", "dmv");
   }
 
-  public function search($q, $page="0"){
+  public function search($q, $page="0", $data=""){
     
     $results = $this->html("http://www.goear.com/search/" . $q . "/" . $page);
-
+    $songs = [];
+    $total = 0;
     if(count($results)>0){
             $total = 0;
             foreach ($results as $item) {
-                $songs[] = array(
+              $songs[] = array(
                 'id'        => $item['id'],
                 'title'     => $item['title'],
                 'artist'    => $item['artist'],
                 'cover'     => '',
                 'duration'  => $item['duration'],
                 'server'    => 'go'
-            );
-                $total++;
+              );
+              $total++;
             }
         }
         return array(
@@ -46,7 +50,7 @@ class Goear{
     preg_match_all("'<li class=\"band\"><a class=\"band_name\" href=\"(.*?)\">(.*?)</a></li>'si", $pre1[1], $band);
     preg_match_all("'<li class=\"stats (.*?)\" title=\"Kbps\">(.*?)<abbr title=\"Kilobit por segundo\">kbps</abbr></li>'si", $pre1[1], $kbps);
     $res = count($titulo[0]);
-
+    $songs = [];
     if($res > 1){      
       for($i=0; $i < $res; $i++){
         $temp = $titulo[4][$i];
@@ -65,6 +69,55 @@ class Goear{
       }
     }
     return $songs;
+  }
+
+  public function add($data, $q){    
+    $count = 0;
+    foreach($data as $val){
+      if($this->insert($val, $q)){
+        $count++;
+        if($count == count($data)){
+          $messages["status"]=true;
+          return $messages;
+        }
+      }
+    }
+  }
+  
+  public function sanitize($data) {   
+    $data = trim($data);    
+    if(get_magic_quotes_gpc()){
+      $data = stripslashes($data);
+    }    
+    $data = mysql_real_escape_string($data);     
+    return $data;
+  }
+
+  public function insert($data, $q){
+    $id_mp3       = $this->sanitize($data["id"]);
+    $q_mp3        = $this->sanitize($q);
+    $title_mp3    = $this->sanitize($data["title"]);
+    $artist_mp3   = $this->sanitize($data["artist"]);
+    $duration_mp3 = $this->sanitize($data["duration"]);
+
+    /*$query = new Consulta("INSERT INTO mp3 VALUES ('', '".$q_mp3."', '".$id_mp3."','".$title_mp3."', '".$artist_mp3."', '".$duration_mp3."')");    
+    if($query){
+      return true;
+    }else{
+      return false;
+    }*/
+
+    $file = "statics/results.json";
+    $inp = file_get_contents($file);
+    $tempArray = json_decode($inp);
+    array_push($tempArray, $data);
+    $jsonData = json_encode($tempArray);
+    $status = file_put_contents($file, $jsonData);
+    if ($status){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public function download($id){
