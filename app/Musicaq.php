@@ -1,8 +1,8 @@
 <?php
 /*require("Connection.php");
-require("Consulta.php");
-*/
-class Goear{
+require("Consulta.php");*/
+
+class Musicaq{
 
   private $_soundcloud_key;
   private $_limit;
@@ -14,61 +14,26 @@ class Goear{
     //$link = new Connection("localhost", "root", "frontend", "dmv");
   }
 
-  public function search($q, $page="0", $data=""){
+  public function getArtistByLetter($letter){
     
-    $results = $this->html("http://www.goear.com/search/" . $q . "/" . $page);
-    $songs = [];
-    $total = 0;
-    if(count($results)>0){
-            $total = 0;
-            foreach ($results as $item) {
-              $songs[] = array(
-                'id'        => $item['id'],
-                'title'     => $item['title'],
-                'artist'    => $item['artist'],
-                'cover'     => '',
-                'duration'  => $item['duration'],
-                'server'    => 'go'
-              );
-              $total++;
-            }
-        }
-        return array(
-            'total' => $total,
-            'results' => $songs
-        );
+    return $this->html("http://musicaq.me/artista/" . $letter . ".html" );
+    
     
   }
 
 
   public function html($url, $referer="http://google.es"){
-    $borrar = array("(",")","[","]","www.djfla.com.ar","www.back2electro.com","www.thedracko.tk","www.musicalocaza.tk","www.torrentazos.com","","www.",".com",".tk","jaipel",".co",".uni",".cc",".ar");
     $cargar = file_get_contents($url);
-    preg_match("'<ol class=\"board_list results_list\">(.*?)</ol>'si", $cargar, $pre1);
-    preg_match_all("'<a class=\"\" title=\"Escuchar (.*?)\" href=\"http://www.goear.com/listen/(.*?)/(.*?)\">(.*?)</a>'si", $pre1[1], $titulo);
-    preg_match_all("'<li class=\"stats length\" title=\"Duración\">(.*?)</li>'si", $pre1[1], $length);
-    preg_match_all("'<li class=\"band\"><a class=\"band_name\" href=\"(.*?)\">(.*?)</a></li>'si", $pre1[1], $band);
-    preg_match_all("'<li class=\"stats (.*?)\" title=\"Kbps\">(.*?)<abbr title=\"Kilobit por segundo\">kbps</abbr></li>'si", $pre1[1], $kbps);
+    preg_match("'<ul id=\"result-letters\">(.*?)</ul>'si", $cargar, $pre1);    
+    preg_match_all("'<a href=\"http://musicaq.me/descargar-mp3/(.*?)\">(.*?)</a>'si", $pre1[1], $titulo);    
     $res = count($titulo[0]);
-    $songs = [];
-    if($res > 1){      
+    $artists = [];
+    if($res > 1){
       for($i=0; $i < $res; $i++){
-        $temp = $titulo[4][$i];
-        $temp = strtolower($temp);
-        $temp = ucwords($temp);
-        $temp = str_replace($borrar, "",$temp);
-
-        $songs[] = array(
-          'title'   => $temp,
-          'artist'  => $band[2][$i],
-          'duration'=> $length[1][$i],
-          'kbps'    => $kbps[2][$i],
-          'id'      => $titulo[2][$i]
-        );
-
+        $artists[] = $titulo[2][$i];
       }
     }
-    return $songs;
+    return $artists;    
   }
 
   public function add($data, $q){    
