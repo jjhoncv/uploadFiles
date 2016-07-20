@@ -4,8 +4,8 @@ var search = (function(){
     service : "Goear",
     url     : "ajax.php",
     alfabet : ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"],
-    index   : 21,
-    page    : 8
+    index   : 0,
+    page    : 0
 
   };
  
