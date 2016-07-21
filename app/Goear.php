@@ -28,7 +28,9 @@ class Goear{
                 'artist'    => $item['artist'],
                 'cover'     => '',
                 'duration'  => $item['duration'],
-                'server'    => 'go'
+                'server'    => 'go',
+                '_artist'   => $q,
+                '_page'     => $page
               );
               $total++;
             }
