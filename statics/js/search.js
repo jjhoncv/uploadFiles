@@ -1,69 +1,85 @@
 var search = (function(){
   
   var defaults = {
-    service : "Goear",
+    service : "Musicaq",
     url     : "ajax.php",
-    alfabet : ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z"],
-    index   : 0,
-    page    : 0
+    alfabet : ["x","y","z","0-9"],
+    index_alfabet   : 0,
+    page_song       : 0,
+    index_artista   : 0,
+    artists         : []
 
   };
  
-  var st = {};
-
-  var dom = {};
- 
-  var catchDom = function(){
-    
-  };
-
   var afterCatchDom = function(){
-    fn.search(st.alfabet[st.index]);
+    fn.getArtistByLetter(st.alfabet[st.index_alfabet]);
   };
-
-  var suscribeEvents = function(){
   
-  };
+  var fn = { 
+    getSongByArtist : function(){
 
-  var events = {
-    
-  };
+      artist = st.artists[st.index_artista].trim().replace(/\/.+/g,"").replace(/\&.+/g,"").replace(/\".+/g,"").replace(/ /g,"+").trim()
 
-  var fn = {    
-    search: function(q){      
-      $.post(st.url, {q: q, service: st.service, page: st.page, method: "search"}, function(data){
-        if(typeof data === 'object'){          
-          if (Array.isArray(data.results) && data.results.length){            
-            fn.addMp3(st.service, "add", q, data.results)            
+      $.post(st.url, {artist: artist, service: "Goear", page: st.page_song, method: "search"}, function(data){
+        if(typeof data === 'object'){
+          if (Array.isArray(data.results) && data.total > 0){
+            fn.addMp3("Goear", "add", artist, data)
           }else{
-            if(st.index <= st.alfabet.length){
-              st.index++;
-              st.page = 0;
-              fn.search(st.alfabet[st.index]);              
+            if(st.index_artista < st.artists.length -1){
+              st.index_artista++;
+              st.page_song = 0;
+              fn.getSongByArtist();              
             }else{
-              console.log("finish!!");
+              if(st.index_alfabet < st.alfabet.length -1){
+                st.index_alfabet++;
+                st.index_artista = 0;
+                st.page_song = 0;
+                fn.getArtistByLetter();                
+              }else{
+                console.log("finish!!");
+              }
             }
           }
         }
-      }, "json")
+       },"json");
     },
 
-    addMp3: function(service, method, q, data){
-      console.log("alfabet: " + st.alfabet[st.index], "page: " + st.page,"total: " + data.length);
-      $.post(st.url, {q:q ,service: service, method: method, data:data}, function(data){
+    getArtistByLetter: function(){
+      $.post(st.url, {letter: st.alfabet[st.index_alfabet], service: "Musicaq", method: "getArtistByLetter"}, function(artists){
+        if(typeof artists === 'object'){
+          if (Array.isArray(artists) && artists.length){
+            st.artists = artists;
+            fn.getSongByArtist();            
+          }else{
+            if(st.index_alfabet < st.alfabet.length -1){
+              st.index_alfabet++;
+              fn.getArtistByLetter();              
+            }
+          }
+        }
+      },"json");
+    },
+
+    addMp3: function(service, method, artist, _data){
+      console.log("alfabet: " + st.alfabet[st.index_alfabet], "artist: " + artist, "page: " + st.page_song,"total: " + _data.total);
+      $.post(st.url, {artist:artist ,service: service, method: method, data:_data}, function(data){
         if(data.status){
-          st.page++;
-          fn.search(st.alfabet[st.index]);
+          if(st.page_song <= 39){
+            st.page_song++;
+            fn.getSongByArtist(artist);            
+          }else{            
+            st.index_artista++;
+            st.page_song = 0;
+            fn.getSongByArtist();
+          }
         }
       }, "json")
     }
   };
 
   var initialize = function(opts){
-    st = $.extend({}, defaults, opts);
-    catchDom();
-    afterCatchDom();   
-    suscribeEvents();
+    st = $.extend({}, defaults, opts);    
+    afterCatchDom();    
   };
   
   return{

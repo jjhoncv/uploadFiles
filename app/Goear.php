@@ -14,9 +14,9 @@ class Goear{
     //$link = new Connection("localhost", "root", "frontend", "dmv");
   }
 
-  public function search($q, $page="0", $data=""){
+  public function search($artist, $page="0"){
     
-    $results = $this->html("http://www.goear.com/search/" . $q . "/" . $page);
+    $results = $this->html("http://www.goear.com/search/" . $artist . "/" . $page);
     $songs = [];
     $total = 0;
     if(count($results)>0){
@@ -29,7 +29,7 @@ class Goear{
                 'cover'     => '',
                 'duration'  => $item['duration'],
                 'server'    => 'go',
-                '_artist'   => $q,
+                '_artist'   => $artist,
                 '_page'     => $page
               );
               $total++;
@@ -76,7 +76,7 @@ class Goear{
   public function add($data, $q){    
     $count = 0;
     foreach($data as $val){
-      if($this->insert($val, $q)){
+      if($this->insert($data, $q)){
         $count++;
         if($count == count($data)){
           $messages["status"]=true;
@@ -91,16 +91,16 @@ class Goear{
     if(get_magic_quotes_gpc()){
       $data = stripslashes($data);
     }    
-    $data = mysql_real_escape_string($data);     
+    //$data = mysql_real_escape_string($data);     
     return $data;
   }
 
   public function insert($data, $q){
-    $id_mp3       = $this->sanitize($data["id"]);
+    /*$id_mp3       = $this->sanitize($data["id"]);
     $q_mp3        = $this->sanitize($q);
     $title_mp3    = $this->sanitize($data["title"]);
     $artist_mp3   = $this->sanitize($data["artist"]);
-    $duration_mp3 = $this->sanitize($data["duration"]);
+    $duration_mp3 = $this->sanitize($data["duration"]);*/
 
     /*$query = new Consulta("INSERT INTO mp3 VALUES ('', '".$q_mp3."', '".$id_mp3."','".$title_mp3."', '".$artist_mp3."', '".$duration_mp3."')");    
     if($query){
@@ -108,11 +108,34 @@ class Goear{
     }else{
       return false;
     }*/
+   /* echo "<pre>";
+    print_r($data);
+    exit;*/
 
     $file = "statics/results.json";
     $inp = file_get_contents($file);
     $tempArray = json_decode($inp);
-    array_push($tempArray, $data);
+
+    if (count($tempArray)>0){
+      
+      $results = $data["results"];
+
+      foreach ($results as $item) {
+        $tempArray[] = array(
+          'id'        => $item['id'],
+          'title'     => $item['title'],
+          'artist'    => $item['artist'],
+          'cover'     => $item['cover'],
+          'duration'  => $item['duration'],
+          'server'    => $item['server'],
+          '_artist'   => $item['_artist'],
+          '_page'     => $item['_page']
+        );
+      }
+    }else{
+      $tempArray = $data["results"];
+    }
+    
     $jsonData = json_encode($tempArray);
     $status = file_put_contents($file, $jsonData);
     if ($status){
