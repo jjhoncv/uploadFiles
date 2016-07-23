@@ -18,5 +18,4 @@ $status = file_put_contents($fileok, $jsonData);
 if($status){
 	echo "listo!";
 }
-
 ?>

@@ -161,7 +161,69 @@ class Goear{
       $data["data"] = array("id"=> $id, "size"=>formatSizeUnits($size));
     }
     return $data;
-  }  
+  }
+
+  public function saveKeys($keys){
+    
+    date_default_timezone_set('America/Lima');
+    $file = "statics/keys.json";
+    $keys["date"] = date('l jS \of F Y h:i:s A');
+    
+    $inp = file_get_contents($file);
+    $tempArray = json_decode($inp);
+    
+    if(count($tempArray)>1){
+      $tempArray[] = array(
+        'page_song'     => $keys["page_song"],
+        'index_alfabet' => $keys["index_alfabet"],
+        'index_artista' => $keys["index_artista"],
+        'date'          => $keys["date"]
+      );
+    }else{
+      $tempArray = array(
+        'page_song'     => $keys["page_song"],
+        'index_alfabet' => $keys["index_alfabet"],
+        'index_artista' => $keys["index_artista"],
+        'date'          => $keys["date"]
+      );      
+    }
+
+    $jsonData = json_encode($tempArray);
+    $status = file_put_contents($file, $jsonData);
+
+    if($status){
+      return array("status"=> true);
+    }else{
+      return array("status"=> false);
+    }
+
+  }
+
+  public function loadKeys(){
+    $file = "statics/keys.json";
+    $inp = file_get_contents($file);
+    $tempArray = json_decode($inp);
+
+    if (count($tempArray)==1){      
+      $keys = array(
+        'page_song'     => $tempArray->page_song,
+        'index_alfabet' => $tempArray->index_alfabet,
+        'index_artista' => $tempArray->index_artista,
+        'date'          => $tempArray->date
+      );
+    }elseif(count($tempArray)>1){
+      $keys = end($tempArray);
+    }else{
+      $keys = array(
+        'page_song'     => 0,
+        'index_alfabet' => 0,
+        'index_artista' => 0,
+        'date'          => date('l jS \of F Y h:i:s A')
+      );
+    }
+
+    return array("status"=> true, "key"=> $keys);
+  }
 
 }
 ?>

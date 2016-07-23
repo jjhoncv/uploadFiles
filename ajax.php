@@ -30,5 +30,16 @@ if(isset($_POST["method"])  && !empty($_POST["method"])){
 		echo json_encode($data);
 	}
 
+	if($method == "saveKeys"){
+		$keys		= $_POST["keys"];
+		$data 	= $service->$method($keys);
+		echo json_encode($data);
+	}
+
+	if($method == "loadKeys"){		
+		$data 	= $service->$method();
+		echo json_encode($data);
+	}
+
 }
 ?>

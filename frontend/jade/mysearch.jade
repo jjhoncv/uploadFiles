@@ -7,8 +7,14 @@ html
 		link(href='statics/css/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css', media='all', rel='stylesheet', type='text/css')
 		link(href='statics/css/bootstrap-3.3.6-dist/css/bootstrap.min.css', media='all', rel='stylesheet', type='text/css')
 	body
-		a.stop.hide(href="#") stop
-		a.continue(href="#") continue
+		.container
+			.row
+				.col-sm-12
+					.input-group
+						span.input-group-btn
+							button.btn.btn-default(type='button') Go!
+						input.form-control(type='text', placeholder='Search for...')
+							
 		script(type='text/javascript', src='statics/js/jquery-1.12.4/jquery-1.12.4.min.js')
 		script(type='text/javascript', src='statics/js/underscore-1.6.0/underscore.min.js')
 		script(type='text/javascript', src='statics/css/bootstrap-3.3.6-dist/js/bootstrap.min.js')
