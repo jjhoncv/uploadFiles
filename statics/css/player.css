@@ -1,0 +1,16 @@
+.wrapper_player{
+	width: 100%;
+	bottom: 0;
+	background: white;
+	border: 1px solid #ddd;
+}
+
+.player .row{
+	margin-bottom: 5px;
+}
+
+.player .progress{
+	height: 5px;
+	margin:0;
+}
+

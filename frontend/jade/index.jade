@@ -6,6 +6,8 @@ html
 		title
 		link(href='statics/css/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css', media='all', rel='stylesheet', type='text/css')
 		link(href='statics/css/bootstrap-3.3.6-dist/css/bootstrap.min.css', media='all', rel='stylesheet', type='text/css')
+		link(href='statics/css/all.css', media='all', rel='stylesheet', type='text/css')
+		link(href='statics/css/player.css', media='all', rel='stylesheet', type='text/css')
 	body
 		.container
 			.page-header
@@ -33,30 +35,35 @@ html
 								p
 									a.btn.btn-primary(href='#', role='button') Button
 									a.btn.btn-default(href='#', role='button') Button
-			.row
-				.col-sm-3
-					.progress
-						.progress-bar(role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;")
-							span.sr-only 60% Complete
-					.row
-						.col-sm-3
-							button.btn.btn-default(type="button")
-								span.glyphicon.glyphicon-step-backward
-						.col-sm-6
-							button.btn.btn-default.center-block(type="button")
-								span.glyphicon.glyphicon-pause
-						.col-sm-3
-							button.btn.btn-default(type="button")
-								span.glyphicon.glyphicon-step-forward
-					.row
-						.col-sm-3
-							button.btn.btn-xs.center-block(type="button")
-								span.glyphicon.glyphicon-volume-down
-						.col-sm-6
-							input(type="range")
-						.col-sm-3
-							button.btn.btn-xs.center-block(type="button")
-								span.glyphicon.glyphicon-volume-up
+			
+		.fixed.wrapper_player
+			.container
+				.row
+					.col-md-2.col-xs-12.player
+						.row
+							.col-md-12.col-xs-12
+								.progress
+									.progress-bar(role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;")
+										span.sr-only 60% Complete
+						.row
+							.col-md-3.col-xs-3
+								button.btn.btn-xs(type="button")
+									span.glyphicon.glyphicon-step-backward
+							.col-md-6.col-xs-6
+								button.btn.btn-xs.center-block(type="button")
+									span.glyphicon.glyphicon-pause
+							.col-md-3.col-xs-3
+								button.btn.btn-xs(type="button")
+									span.glyphicon.glyphicon-step-forward
+						.row
+							.col-md-3.col-xs-3
+								button.btn.btn-xs.center-block(type="button")
+									span.glyphicon.glyphicon-volume-down
+							.col-md-6.col-xs-6
+								input(type="range")
+							.col-md-3.col-xs-3
+								button.btn.btn-xs.center-block(type="button")
+									span.glyphicon.glyphicon-volume-up
 
 						
 
