@@ -11,12 +11,13 @@ class Musicaq{
 
   public function __construct(){
     $this->_limit = 25;
+    $this->_domain = "musicaq.tv";
     //$link = new Connection("localhost", "root", "frontend", "dmv");
   }
 
   public function getArtistByLetter($letter){
     
-    return $this->html("http://musicaq.me/artista/" . $letter . ".html" );
+    return $this->html("http://".$this->_domain."/artista/" . $letter . ".html" );
     
     
   }
@@ -25,7 +26,7 @@ class Musicaq{
   public function html($url, $referer="http://google.es"){
     $cargar = file_get_contents($url);
     preg_match("'<ul id=\"result-letters\">(.*?)</ul>'si", $cargar, $pre1);    
-    preg_match_all("'<a href=\"http://musicaq.me/descargar-mp3/(.*?)\">(.*?)</a>'si", $pre1[1], $titulo);    
+    preg_match_all("'<a href=\"http://".$this->_domain."/descargar-mp3/(.*?)\">(.*?)</a>'si", $pre1[1], $titulo);    
     $res = count($titulo[0]);
     $artists = [];
     if($res > 1){
