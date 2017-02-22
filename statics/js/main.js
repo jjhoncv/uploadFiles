@@ -44,7 +44,7 @@ var main = (function(){
 
   var fn = {    
     search: function(q){
-      $.post(st.url, {q: q, service: st.service}, function(data){
+      $.post(st.url, {q: q, service: st.service, method:"find"}, function(data){
         if(typeof data === 'object'){
           var li = "";
           if (Array.isArray(data.results) && data.results.length){

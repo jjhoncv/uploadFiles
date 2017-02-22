@@ -225,5 +225,32 @@ class Goear{
     return array("status"=> true, "key"=> $keys);
   }
 
+  public function find($q){
+    $m = new MongoClient();
+    $db = $m->selectDB('test');
+    //echo "q";exit;
+    //echo $db->foo->find();
+    //echo $q;
+    $collection = new MongoCollection($db, 'foo');
+    
+    $regex = new MongoRegex("/^".$q."/i");
+    
+    $query = array('title' => $regex);
+
+
+    $cursor = $collection->find($query);
+    
+    //print_r($cursor);
+    //$data = [];
+    foreach ($cursor as $id => $val) {
+      //return $val['id'];
+      $data[] = array('title' => $val['title'], 'id'=> $val['id']);
+      //$_data[] = $data;
+    }
+
+    return array('results'=>$data);
+
+  }
+
 }
 ?>

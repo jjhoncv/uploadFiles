@@ -10,6 +10,13 @@ if(isset($_POST["method"])  && !empty($_POST["method"])){
 	$service 	= $_POST["service"];	
 	$service = new $service();	
 
+	
+	if($method == "find"){		
+		$q = $_POST["q"];	
+		$data 	= $service->$method($q);
+		echo json_encode($data);
+	}
+
 	if($method == "getArtistByLetter"){		
 		$letter = $_POST["letter"];	
 		$data 	= $service->$method($letter);
