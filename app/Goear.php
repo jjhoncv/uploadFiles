@@ -235,8 +235,18 @@ class Goear{
     
     $regex = new MongoRegex("/^".$q."/i");
     
-    $query = array('title' => $regex);
+    //$query = array('title' => $regex, 'artist' => $regex);
 
+    $query = array(
+    '$or' => array(
+        array(
+            'title' => $regex
+            ),
+        array(
+            'artist' => $regex
+            ),
+        )
+    );
 
     $cursor = $collection->find($query);
     
@@ -244,7 +254,7 @@ class Goear{
     //$data = [];
     foreach ($cursor as $id => $val) {
       //return $val['id'];
-      $data[] = array('title' => $val['title'], 'id'=> $val['id']);
+      $data[] = array('title' => $val['title'], 'id'=> $val['id'], 'duration'=> $val['duration'], 'artist'=>$val['artist']);
       //$_data[] = $data;
     }
 

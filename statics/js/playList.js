@@ -8,7 +8,7 @@ var playList = (function(){
     play        : ".play",
     stop        : ".stop",
     listMusic   : ".to_music_player > ul",
-    tplItem     : "#tplItem",
+    tplItem     : "#tplItemList",
     songs       : [],
     index       : 0
   };
@@ -131,7 +131,7 @@ var playList = (function(){
 
     removeSong : function(index){
       delete st.songs[index];
-      dom.listMusic.find("li article[data-index="+index+"]").parents("li").renove();
+      dom.listMusic.find("li article[data-index="+index+"]").parents("li").remove();
     }  
 
   };

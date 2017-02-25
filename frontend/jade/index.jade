@@ -14,30 +14,36 @@ html
 				h1 Example page header <small>Subtext for header</small>          
 			.row
 				.col-sm-12
-					.input-group
-						span.input-group-btn
-							button.btn.btn-default(type='button') Go!
-						input.form-control(type='text', placeholder='Search for...')
+					form.frm_search
+						.input-group
+							span.input-group-btn
+								button.btn.btn-default(type='submit') Go!
+							input.form-control.txt_search(type='text', placeholder='Search for...')
 			.row
 				.col-sm-12
 					h3
 						| Example heading 
 						span.label.label-default New
 			.row
-				each val in [1, 2, 3, 4, 5,6,7,8,9,10,11,12]					
-					.col-sm-3
-						.thumbnail
-							img(src='...', alt='...')
-							.caption
-								h3 Thumbnail label
-								p
-									| Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-								p
-									a.btn.btn-primary(href='#', role='button') Button
-									a.btn.btn-default(href='#', role='button') Button
+				.col-sm-12
+					
+					ul.list-group
+						//-each val in [1, 2, 3, 4, 5,6,7,8,9,10,11,12]
+						//-li.list-group-item awdawd
+				//- each val in [1, 2, 3, 4, 5,6,7,8,9,10,11,12]					
+				//- 	.col-sm-3
+				//- 		.thumbnail
+				//- 			img(src='...', alt='...')
+				//- 			.caption
+				//- 				h3 Thumbnail label
+				//- 				p
+				//- 					| Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+				//- 				p
+				//- 					a.btn.btn-primary(href='#', role='button') Button
+				//- 					a.btn.btn-default(href='#', role='button') Button
 			
 		.fixed.wrapper_player
-			.container
+			.container.music_player
 				.row
 					.col-md-2.col-xs-12.player
 						.row
@@ -66,9 +72,13 @@ html
 									span.glyphicon.glyphicon-volume-up
 
 						
+					.col-md-10
+						.to_music_player
+							ul
 
 				.col-sm-9
 					p ss
+
 					
 		form.frm_search
 			input.txt_search(type='text', name='', value='', placeholder='')
@@ -90,12 +100,11 @@ html
 				span.seconds 55
 			.control_search
 				input.search(type='text')
-			.to_music_player
-				ul
-		script#tplItem(type='text/template').
+
+		script#tplItemList(type='text/template').
 			<li>
 			<article data-index="{{= song.index}}">
-			<a href="#" class="listen">Escuchar</a>
+			<a href="#" class="listen">Play</a>
 			<a href="#" class="remove">Quitar</a>
 			<div class="title">{{= song.title}}</div>
 			</article>

@@ -1,11 +1,12 @@
 var main = (function(){
+  //alert("aaa");
   
   var defaults = {
     frmSearch : ".frm_search",
     txtSearch : ".txt_search",
     //url       : "//dl.mp3yox.com/elastic/api.php?query=",
     url       : "ajax.php",
-    list      : ".list",
+    list      : ".list-group",
     service   : "Goear" // "Mp3yox" |  Soundcloud | Goear
   };
  
@@ -35,7 +36,7 @@ var main = (function(){
 
     submit : function(e){
       e.preventDefault();
-      var q = dom.txtSearch.val().replace(/ /gi,"+");
+      var q = dom.txtSearch.val();
       if(q){
         fn.search(q);
       }
@@ -52,7 +53,7 @@ var main = (function(){
             console.log("results.length", results.length);
             for(var i = 0; i < results.length; i++){
               var item = results[i];              
-              li+='<li><div class="title">' + item.title + '</div><div><a class="listen" href="http://www.goear.com/action/sound/get/' + item.id + '">Escuchar</a></div><div><a href="download.php?file=' + item.id + '">Download</a></div></li>';
+              li+='<li class="list-group-item col-sm-3"><div class="cnt"><div class="title">'+item.duration + " : " + item.title + '<br/><strong>'+item.artist+'</strong></div><div class="options"><div><a class="listen" href="http://www.goear.com/action/sound/get/' + item.id + '"><span class="glyphicon glyphicon-plus"></span> Add</a></div><div><a href="download.php?file=' + item.id + '"><span class="glyphicon glyphicon-save"></span> Download</a></div></div></div></li>';
             }            
           }
           dom.list.html(li);

@@ -14,3 +14,40 @@
 	margin:0;
 }
 
+.to_music_player{
+
+}
+.to_music_player ul{
+
+}
+.to_music_player ul li{
+	display: inline-block;
+	width: 171px;
+	height: 90px;
+	margin: 5px;
+	vertical-align: top;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+.options{
+	position: absolute;
+    bottom: 16px;
+    width: 90%;
+}
+.list-group-item{
+	border: none !important;
+	padding: 5px;
+}
+.list-group-item .cnt{
+	border: 1px solid #ccc;
+	min-height: 125px;
+	padding: 10px;
+}
+.options div{
+	float: left;
+	border: 1px solid rgba(51, 122, 183, 0.41);
+	padding: 2px 12px;
+}
+.options div + div{
+	float: right;
+}
